@@ -140,8 +140,8 @@ class LocalOptimizer(optim.Optimizer):
             t2 = self.gg[m] @ self.B[m]
             tr_v_a = torch.sum( self.A[m]*t1 )
             tr_v_b = torch.sum( self.B[m]*t2 )
-            ng_a = (self.A[m].t() @ ((damping*tr_B_tB/d)*self.A[m] + (tr_v_b/d)*t1) - torch.eye(p, device='cuda') )/2.0
-            ng_b = (self.B[m].t() @ ((damping*tr_A_tA/p)*self.B[m] + (tr_v_a/p)*t2) - torch.eye(d, device='cuda') )/2.0
+            ng_a = (self.A[m].t() @ ((damping*tr_B_tB/d)*self.A[m] + (tr_v_b/d)*t1) - torch.eye(p, device=t1.device) )/2.0
+            ng_b = (self.B[m].t() @ ((damping*tr_A_tA/p)*self.B[m] + (tr_v_a/p)*t2) - torch.eye(d, device=t2.device) )/2.0
         else:
             v_a = self.A[m].t() @  self.aa[m] @ self.A[m]
             v_b = self.B[m].t() @  self.gg[m] @ self.B[m]
